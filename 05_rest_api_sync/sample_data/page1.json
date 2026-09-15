@@ -1,0 +1,7 @@
+{
+  "results": [
+    {"id": 1, "name": "Alice Brown", "email": "ALICE@example.com", "status": "Active", "updated_at": "2026-09-01T10:00:00Z"},
+    {"id": 2, "name": "Marco Rossi", "email": "marco@example.it", "status": "Active", "updated_at": "2026-09-01T11:00:00Z"}
+  ],
+  "next": "https://api.example.test/customers?page=2"
+}

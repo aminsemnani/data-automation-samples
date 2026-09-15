@@ -1,0 +1,25 @@
+{
+  "files_processed": [
+    "01_customers_january.csv",
+    "02_customers_february.csv"
+  ],
+  "rows_per_file": {
+    "01_customers_january.csv": 4,
+    "02_customers_february.csv": 3
+  },
+  "input_rows": 7,
+  "output_rows": 6,
+  "duplicates_removed": 1,
+  "deduplication_keys": [
+    "customer_id"
+  ],
+  "columns": [
+    "customer_id",
+    "full_name",
+    "email",
+    "city",
+    "order_total",
+    "source_file"
+  ],
+  "output_file": "merged_cleaned.csv"
+}

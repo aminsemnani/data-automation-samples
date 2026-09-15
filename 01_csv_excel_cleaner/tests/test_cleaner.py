@@ -37,3 +37,21 @@ def test_merge_and_clean_deduplicates_by_key(tmp_path: Path):
     assert len(result) == 3
     assert result.loc[result["customer_id"] == 2, "name"].item() == "Bob Updated"
     assert report["duplicates_removed"] == 1
+
+
+def test_reads_xlsx_and_writes_xlsx(tmp_path: Path):
+    input_dir = tmp_path / "input"
+    input_dir.mkdir()
+    pd.DataFrame(
+        {
+            "Customer ID": [1, 2],
+            " Full Name ": ["Alice", " Bob "],
+        }
+    ).to_excel(input_dir / "customers.xlsx", index=False)
+
+    output_path = tmp_path / "merged.xlsx"
+    report_path = tmp_path / "report.json"
+    merge_and_clean(input_dir, output_path, report_path, ["customer_id"])
+
+    result = pd.read_excel(output_path)
+    assert list(result["full_name"]) == ["Alice", "Bob"]

@@ -1,0 +1,22 @@
+{
+  "input_records": 6,
+  "accepted_records": 3,
+  "rejected_records": 3,
+  "acceptance_rate": 0.5,
+  "error_counts_by_field": {
+    "amount": 1,
+    "email": 1,
+    "order_date": 1,
+    "order_id": 1
+  },
+  "output_fields": [
+    "order_id",
+    "customer_id",
+    "customer_name",
+    "email",
+    "order_date",
+    "currency",
+    "amount",
+    "country"
+  ]
+}

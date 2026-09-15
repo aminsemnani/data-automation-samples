@@ -1,0 +1,11 @@
+{
+  "source": "fixture:sample_data",
+  "started_at": "2026-09-15T18:36:03+00:00",
+  "completed_at": "2026-09-15T18:36:03+00:00",
+  "pages_fetched": 2,
+  "records_received": 4,
+  "inserted": 4,
+  "updated": 0,
+  "rows_in_database": 4,
+  "database": "customers.sqlite"
+}

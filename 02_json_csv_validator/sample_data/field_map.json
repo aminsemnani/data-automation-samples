@@ -1,0 +1,10 @@
+{
+  "order_id": "order.id",
+  "customer_id": "customer.id",
+  "customer_name": "customer.name",
+  "email": "customer.email",
+  "order_date": "order.date",
+  "currency": "order.currency",
+  "amount": "order.amount",
+  "country": "customer.country"
+}

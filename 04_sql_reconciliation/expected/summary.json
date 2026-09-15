@@ -1,0 +1,14 @@
+{
+  "records": 6,
+  "status_counts": {
+    "matched": 2,
+    "orphan_payment": 1,
+    "overpaid": 1,
+    "partial": 1,
+    "unpaid": 1
+  },
+  "invoice_total": 3840.0,
+  "payments_applied_to_invoices": 3300.0,
+  "net_variance": -540.0,
+  "exceptions": 4
+}

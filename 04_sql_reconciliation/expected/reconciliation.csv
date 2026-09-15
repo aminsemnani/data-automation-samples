@@ -1,0 +1,7 @@
+record_type,invoice_id,customer,invoice_date,due_date,invoice_amount,paid_amount,variance,payment_count,status
+invoice,INV-1001,Atlas Trading,2026-07-01,2026-07-31,1200.0,1200.0,0.0,1,matched
+invoice,INV-1002,Northstar Ltd,2026-07-05,2026-08-04,850.0,850.0,0.0,2,matched
+invoice,INV-1003,Blue River Co,2026-07-10,2026-08-09,500.0,250.0,-250.0,1,partial
+invoice,INV-1004,Orion Systems,2026-07-15,2026-08-14,990.0,1000.0,10.0,1,overpaid
+invoice,INV-1005,Delta Works,2026-07-20,2026-08-19,300.0,0.0,-300.0,0,unpaid
+orphan_payment,INV-9999,,,,0.0,175.0,175.0,1,orphan_payment

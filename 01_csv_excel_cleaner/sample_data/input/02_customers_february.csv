@@ -1,0 +1,4 @@
+customer_id,full-name, EMAIL , city ,order total
+1003, Sara Ahmadi , sara@example.com ,Tabriz,210.00
+1005,Nima Hosseini,nima@example.com,Mashhad,175.40
+1006,Leyla Ebrahimi,leyla@example.com,Tehran,132.00

@@ -12,7 +12,7 @@ import requests
 
 
 class ApiError(RuntimeError):
-    pass
+    """Raised when an API response cannot be safely processed."""
 
 
 class PaginatedApiClient:
@@ -29,23 +29,38 @@ class PaginatedApiClient:
         self.backoff_seconds = backoff_seconds
 
     def _get_json(self, url: str) -> dict[str, Any]:
+        """Fetch one page, retrying only failures that are reasonably transient."""
         last_error: Exception | None = None
+
         for attempt in range(self.max_retries + 1):
             try:
                 response = self.session.get(url, timeout=self.timeout)
-                if response.status_code >= 500:
-                    raise ApiError(f"Server error {response.status_code} for {url}")
-                if response.status_code >= 400:
-                    raise ApiError(f"HTTP {response.status_code} for {url}")
-                payload = response.json()
-                if not isinstance(payload, dict):
-                    raise ApiError("Expected a JSON object response")
-                return payload
-            except (requests.RequestException, ValueError, ApiError) as exc:
+            except requests.RequestException as exc:
                 last_error = exc
                 if attempt >= self.max_retries:
                     break
                 time.sleep(self.backoff_seconds * (2**attempt))
+                continue
+
+            if response.status_code >= 500:
+                last_error = ApiError(f"Server error {response.status_code} for {url}")
+                if attempt >= self.max_retries:
+                    break
+                time.sleep(self.backoff_seconds * (2**attempt))
+                continue
+
+            if response.status_code >= 400:
+                raise ApiError(f"HTTP {response.status_code} for {url}")
+
+            try:
+                payload = response.json()
+            except ValueError as exc:
+                raise ApiError(f"Invalid JSON response from {url}") from exc
+
+            if not isinstance(payload, dict):
+                raise ApiError("Expected a JSON object response")
+            return payload
+
         raise ApiError(f"Request failed after retries: {last_error}")
 
     def iter_pages(self, start_url: str) -> Iterable[dict[str, Any]]:
@@ -105,12 +120,20 @@ def normalize_customer(record: dict[str, Any]) -> dict[str, Any]:
     missing = [field for field in required if field not in record]
     if missing:
         raise ValueError("Customer record missing fields: " + ", ".join(missing))
+
+    name = str(record["name"]).strip()
+    email = str(record["email"]).strip().lower()
+    status = str(record["status"]).strip().lower()
+    updated_at = str(record["updated_at"]).strip()
+    if not name or not email or not status or not updated_at:
+        raise ValueError("Customer record contains empty required values")
+
     return {
         "id": int(record["id"]),
-        "name": str(record["name"]).strip(),
-        "email": str(record["email"]).strip().lower(),
-        "status": str(record["status"]).strip().lower(),
-        "updated_at": str(record["updated_at"]).strip(),
+        "name": name,
+        "email": email,
+        "status": status,
+        "updated_at": updated_at,
     }
 
 
@@ -119,9 +142,12 @@ def upsert_customers(
 ) -> tuple[int, int]:
     inserted = 0
     updated = 0
+
     for record in records:
         row = normalize_customer(record)
-        exists = conn.execute("SELECT 1 FROM customers WHERE id = ?", (row["id"],)).fetchone()
+        exists = conn.execute(
+            "SELECT 1 FROM customers WHERE id = ?", (row["id"],)
+        ).fetchone()
         conn.execute(
             """
             INSERT INTO customers (id, name, email, status, updated_at, synced_at)
@@ -139,6 +165,7 @@ def upsert_customers(
             updated += 1
         else:
             inserted += 1
+
     return inserted, updated
 
 
@@ -161,8 +188,11 @@ def sync_pages(
         for page in pages:
             pages_fetched += 1
             records = page.get("results")
-            if not isinstance(records, list) or not all(isinstance(item, dict) for item in records):
+            if not isinstance(records, list) or not all(
+                isinstance(item, dict) for item in records
+            ):
                 raise ValueError("Every page must contain a 'results' array of objects")
+
             records_received += len(records)
             synced_at = datetime.now(timezone.utc).isoformat()
             page_inserted, page_updated = upsert_customers(conn, records, synced_at)
@@ -177,7 +207,15 @@ def sync_pages(
                 records_received, inserted, updated
             ) VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
-            (started, completed, source, pages_fetched, records_received, inserted, updated),
+            (
+                started,
+                completed,
+                source,
+                pages_fetched,
+                records_received,
+                inserted,
+                updated,
+            ),
         )
         total_rows = conn.execute("SELECT COUNT(*) FROM customers").fetchone()[0]
         conn.commit()
@@ -199,11 +237,16 @@ def sync_pages(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Synchronize a paginated REST API into SQLite with retries and idempotent upserts."
+        description=(
+            "Synchronize a paginated REST API into SQLite with retries "
+            "and idempotent upserts."
+        )
     )
     source_group = parser.add_mutually_exclusive_group(required=True)
     source_group.add_argument("--url", help="First API page URL")
-    source_group.add_argument("--fixture-dir", type=Path, help="Offline page fixture directory")
+    source_group.add_argument(
+        "--fixture-dir", type=Path, help="Offline page fixture directory"
+    )
     parser.add_argument("--database", type=Path, default=Path("customers.sqlite"))
     parser.add_argument("--report", type=Path, default=Path("sync_report.json"))
     parser.add_argument("--timeout", type=float, default=10.0)

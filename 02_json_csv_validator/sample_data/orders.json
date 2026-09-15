@@ -1,0 +1,26 @@
+[
+  {
+    "order": {"id": "ORD-1001", "date": "2026-08-01", "currency": "usd", "amount": "125.50"},
+    "customer": {"id": "C-001", "name": "  Alice Brown ", "email": "ALICE@example.com", "country": "us"}
+  },
+  {
+    "order": {"id": "ORD-1002", "date": "2026-08-02", "currency": "EUR", "amount": 89.9},
+    "customer": {"id": "C-002", "name": "Marco Rossi", "email": "marco@example.it", "country": "it"}
+  },
+  {
+    "order": {"id": "ORD-1003", "date": "2026-08-03", "currency": "GBP", "amount": "210"},
+    "customer": {"id": "C-003", "name": "Nora Khan", "email": "nora@example.co.uk", "country": "gb"}
+  },
+  {
+    "order": {"id": "ORD-1004", "date": "03/08/2026", "currency": "USD", "amount": "59.00"},
+    "customer": {"id": "C-004", "name": "Bad Date", "email": "date@example.com", "country": "us"}
+  },
+  {
+    "order": {"id": "ORD-1005", "date": "2026-08-05", "currency": "USD", "amount": "-5"},
+    "customer": {"id": "C-005", "name": "Bad Amount", "email": "not-an-email", "country": "ca"}
+  },
+  {
+    "order": {"id": "ORD-1002", "date": "2026-08-06", "currency": "EUR", "amount": "91.00"},
+    "customer": {"id": "C-006", "name": "Duplicate Order", "email": "dup@example.com", "country": "de"}
+  }
+]

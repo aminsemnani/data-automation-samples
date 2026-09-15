@@ -26,7 +26,7 @@ This repository is intentionally small in scope and explicit in behavior. The go
 - limited dependencies and straightforward project structure
 - no credentials, client data, or hidden external services required for tests
 
-See [QUALITY.md](./QUALITY.md) for the standards used across the repository.
+See [QUALITY.md](./QUALITY.md) for the standards used across the repository and [VALIDATION.md](./VALIDATION.md) for the local test snapshot.
 
 ## Scope
 

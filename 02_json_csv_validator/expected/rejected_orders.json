@@ -1,0 +1,26 @@
+[
+  {
+    "record_number": 4,
+    "errors": ["order_date: expected YYYY-MM-DD"],
+    "record": {
+      "order": {"id": "ORD-1004", "date": "03/08/2026", "currency": "USD", "amount": "59.00"},
+      "customer": {"id": "C-004", "name": "Bad Date", "email": "date@example.com", "country": "us"}
+    }
+  },
+  {
+    "record_number": 5,
+    "errors": ["email: invalid format", "amount: must be non-negative"],
+    "record": {
+      "order": {"id": "ORD-1005", "date": "2026-08-05", "currency": "USD", "amount": "-5"},
+      "customer": {"id": "C-005", "name": "Bad Amount", "email": "not-an-email", "country": "ca"}
+    }
+  },
+  {
+    "record_number": 6,
+    "errors": ["order_id: duplicate"],
+    "record": {
+      "order": {"id": "ORD-1002", "date": "2026-08-06", "currency": "EUR", "amount": "91.00"},
+      "customer": {"id": "C-006", "name": "Duplicate Order", "email": "dup@example.com", "country": "de"}
+    }
+  }
+]

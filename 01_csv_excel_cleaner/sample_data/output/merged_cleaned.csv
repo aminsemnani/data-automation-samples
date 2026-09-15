@@ -1,0 +1,7 @@
+customer_id,full_name,email,city,order_total,source_file
+1001,Alice Rahimi,alice@example.com,Tehran,125.5,01_customers_january.csv
+1002,Bob Karimi,bob@example.com,Shiraz,89.0,01_customers_january.csv
+1004,Reza Moradi,reza@example.com,Tehran,95.25,01_customers_january.csv
+1003,Sara Ahmadi,sara@example.com,Tabriz,210.0,02_customers_february.csv
+1005,Nima Hosseini,nima@example.com,Mashhad,175.4,02_customers_february.csv
+1006,Leyla Ebrahimi,leyla@example.com,Tehran,132.0,02_customers_february.csv

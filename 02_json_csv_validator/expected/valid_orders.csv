@@ -1,0 +1,4 @@
+order_id,customer_id,customer_name,email,order_date,currency,amount,country
+ORD-1001,C-001,Alice Brown,alice@example.com,2026-08-01,USD,125.50,US
+ORD-1002,C-002,Marco Rossi,marco@example.it,2026-08-02,EUR,89.90,IT
+ORD-1003,C-003,Nora Khan,nora@example.co.uk,2026-08-03,GBP,210.00,GB

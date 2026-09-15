@@ -1,0 +1,13 @@
+date,order_id,region,salesperson,product,quantity,unit_price
+2026-07-02,SO-1001,North,Alice,Controller-A,3,420
+2026-07-03,SO-1002,South,Marco,Sensor-B,10,85
+2026-07-08,SO-1003,North,Alice,Sensor-B,8,85
+2026-07-12,SO-1004,West,Nora,GatewayC,2,760
+2026-08-01,SO-1005,South,Marco,Controller-A,5,420
+2026-08-04,SO-1006,West,Nora,Sensor-B,12,85
+2026-08-11,SO-1007,North,Alice,GatewayC,1,760
+2026-08-19,SO-1008,South,Marco,Sensor-B,20,85
+2026-09-02,SO-1009,West,Nora,Controller-A,4,420
+2026-09-08,SO-1010,North,Alice,Sensor-B,15,85
+2026-09-12,SO-1011,South,Marco,GatewayC,3,760
+2026-09-14,SO-1012,West,Nora,Sensor-B,18,85
